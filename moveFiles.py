@@ -4,6 +4,9 @@ import shutil
 from pathlib import Path
 
 FILE_TYPE = '.wav'
+SOURCE_DIRECTORY = ''
+TARGET_DIRECTORY = ''
+CURRENT_DIRECTORY = os.getcwd()
 
 def print_files(root):
     for path, subdirs, files in os.walk(root):
@@ -15,31 +18,41 @@ def get_folder_path(file):
     dir_path = file[0:(file.find(file_path) - 1)]
     return dir_path
 
-def move_files(path):
+def move_files(source_path, target_path):
 
-    for files in glob.glob(path + '/**/*' + FILE_TYPE, recursive=True):
-        if get_folder_path(files) != path:
-            shutil.move(files, path)
+    files_moved = 0
+
+    for files in glob.glob(source_path + '/**/*' + FILE_TYPE, recursive=True):
+        if get_folder_path(files) != source_path:
+            shutil.move(files, target_path)
+            files_moved += 1
         else:
             print('Skipping ' + files + '...')
-    print('\nDone.\n')
+    print('\nFinished moving ' + str(files_moved) + ' files.\n')
     print('********************************************************************\n')
-
-path = os.getcwd()
 
 print('********************************************************************\n')
 
-print("The current directory is: " + path)
+print("The current directory is: " + CURRENT_DIRECTORY)
 input("Press Enter to see all files\n")
-print_files(path)
+print_files(CURRENT_DIRECTORY)
 print('\n')
 
 print('********************************************************************\n')
 
-entry = input("Would you like to move all .wav files in sub-folders into this directory?\n\nEnter 'Y' for Yes and 'N' for No: ")
+entry = input("Would you like to move all " + FILE_TYPE + " files in sub-folders into this directory?\n\nEnter 'Y' for Yes and 'N' for No: ")
 print('')
 
-if entry == 'N' or entry == 'n':
-    print("Oh, okay. Fuck you, then.")
+if entry == 'Y' or entry == 'y':
+    move_files(CURRENT_DIRECTORY, CURRENT_DIRECTORY)
 else:
-    move_files(path)
+    if SOURCE_DIRECTORY != '' or TARGET_DIRECTORY != '':
+        entry = input("Would you like to move all " + FILE_TYPE + " files from " +
+                    SOURCE_DIRECTORY + " to " + TARGET_DIRECTORY + "?\n\nEnter 'Y' for Yes and 'N' for No: ")
+        if entry == 'y' or entry == 'Y':
+            move_files(SOURCE_DIRECTORY, TARGET_DIRECTORY)
+        else:
+            print("Why did you even use this program?")
+    else:
+        print("Oh, okay. Fuck you, then.\n")
+        
