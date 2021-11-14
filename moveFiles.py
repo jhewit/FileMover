@@ -31,28 +31,30 @@ def move_files(source_path, target_path):
     print('\nFinished moving ' + str(files_moved) + ' files.\n')
     print('********************************************************************\n')
 
-print('********************************************************************\n')
+def main():
+    print('********************************************************************\n')
 
-print("The current directory is: " + CURRENT_DIRECTORY)
-input("Press Enter to see all files\n")
-print_files(CURRENT_DIRECTORY)
-print('\n')
+    print("The current directory is: " + CURRENT_DIRECTORY)
+    input("Press Enter to see all files\n")
+    print_files(CURRENT_DIRECTORY)
+    print('\n')
 
-print('********************************************************************\n')
+    print('********************************************************************\n')
 
-entry = input("Would you like to move all " + FILE_TYPE + " files in sub-folders into this directory?\n\nEnter 'Y' for Yes and 'N' for No: ")
-print('')
+    entry = input("Would you like to move all " + FILE_TYPE + " files in sub-folders into this directory?\n\nEnter 'Y' for Yes and 'N' for No: ")
+    print('')
 
-if entry == 'Y' or entry == 'y':
-    move_files(CURRENT_DIRECTORY, CURRENT_DIRECTORY)
-else:
-    if SOURCE_DIRECTORY != '' or TARGET_DIRECTORY != '':
-        entry = input("Would you like to move all " + FILE_TYPE + " files from " +
-                    SOURCE_DIRECTORY + " to " + TARGET_DIRECTORY + "?\n\nEnter 'Y' for Yes and 'N' for No: ")
-        if entry == 'y' or entry == 'Y':
-            move_files(SOURCE_DIRECTORY, TARGET_DIRECTORY)
-        else:
-            print("Why did you even use this program?")
+    if entry == 'Y' or entry == 'y':
+        move_files(CURRENT_DIRECTORY, CURRENT_DIRECTORY)
     else:
-        print("Oh, okay. Fuck you, then.\n")
+        if SOURCE_DIRECTORY != '' or TARGET_DIRECTORY != '':
+            entry = input("Would you like to move all " + FILE_TYPE + " files from " +
+                        SOURCE_DIRECTORY + " to " + TARGET_DIRECTORY + "?\n\nEnter 'Y' for Yes and 'N' for No: ")
+            if entry == 'y' or entry == 'Y':
+                move_files(SOURCE_DIRECTORY, TARGET_DIRECTORY)
+            else:
+                print("Why did you even use this program?")
+        else:
+            print("Oh, okay. Fuck you, then.\n")
         
+main()
